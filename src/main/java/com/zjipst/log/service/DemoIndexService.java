@@ -58,6 +58,7 @@ public class DemoIndexService {
 			Document doc = getDocument(file, ++lnum, lstr);
 			iwriter.addDocument(doc);
 		}
+		reader.close();
 	}
 	
 	/**
@@ -105,9 +106,9 @@ public class DemoIndexService {
 	 */
 	public void search() throws Exception{
 		IndexSearcher searcher = 
-				new IndexSearcher(DirectoryReader.open(FSDirectory.open(Paths.get("/Users/liangkim/tmp/"))));
+				new IndexSearcher(DirectoryReader.open(FSDirectory.open(Paths.get(indexPath))));
 		QueryParser parser = new QueryParser("content", analyzer);
-		Query query = parser.parse("Exception");
+		Query query = parser.parse("3301001610260000000003");
 		TopDocs docs = searcher.search(query, 10);
 		System.out.println("共查询到："+docs.totalHits);
 		
@@ -120,7 +121,9 @@ public class DemoIndexService {
 	
 	public static void main(String[] args) throws Exception{
 //		
-		DemoIndexService dis = new DemoIndexService("/Users/liangkim/tmp", "/Users/liangkim/tmp");
+		DemoIndexService dis = new DemoIndexService("E:\\lucene\\index", "E:\\lucene\\sor");
+//		dis.start();
+//		dis.close();
 		dis.search();
 	}
 }
